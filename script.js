@@ -23,20 +23,20 @@ const collectEmployees = function () {
     return dataOut; // prevents error from calling this function on button press if you enter nothing by returning the existing array of objects
   }
 
-  // as long as you selected to input employees will continue to allow more employee object editions
+  // as long as you selected confirm input employees will continue to allow more employee object editions
   while(enter) {
-    const employee = {};
+    const employee = {}; // i0 = first name, i1 = last name, i2 = salary of employee (see keys array, use values array to assign)
     values[0] = prompt(`Enter first name of employee: `);
     values[1] = prompt(`Enter last name of employee: `);
     values[2] = prompt(`Enter salary of employee: `);
-    values[2] = parseInt(values[2]); // fix input to interger value for salary
+    values[2] = parseFloat(values[2]); // fix input to interger value for salary
 
     // assign default value of zero if non interger entered for salary
     if (isNaN(values[2])) {
       values[2] = 0;
     }
 
-    // create the employee object and adds values to keys (MUST ADD MORE VALUE INPUTS IF EXTENDING KEY LIST, OTHERWISE WILL BE LEFT UNDEFINED)
+    // create the employee object and adds values to keys (MUST ADD MORE VALUE INPUTS ABOVE IF EXTENDING KEYS LIST, OTHERWISE WILL BE LEFT UNDEFINED, NO DEFAULT )
     for (let i = 0; i < keys.length; i++) {
       employee[keys[i]] = values[i];
     }
@@ -48,15 +48,31 @@ const collectEmployees = function () {
     dataOut[personNumber] = employee;
     enter = confirm(`Add more employees?`);
     personNumber++;
+    //TEST BLOCK---------------------------------------------------------------------------------------------
+    // for (let i = 0; i < lengthOfList; i++){
+      // console.log(employees[i]);
+    // }
+    //-------------------------------------------------------------------------------------------------------
     //ALSO ADD LENGTH OF LIST ITERATOR FOR TEST CONSOLE PRINT LOOP-----------------------------------------------------------------------------------------------------------
     //lengthOfList++;
   }
-  return dataOut;
+  return dataOut; // primary data tracking return once leaving while loop, this variable is assigned to whatever exists in the employee object array each time the function is called, its sister variable for tracking the placement of employees in the index is declared just below it at the top of the page
 };
 
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
-  // TODO: Calculate and display the average salary
+  let salaryTotal = 0;
+  let salaryAvg = 0;
+  let salaryIn;
+  for (var objectIt of employeesArray) {
+    //console.log(objectIt);
+    salaryIn = Object.values(objectIt);
+    //console.log(salaryIn);
+    salaryTotal = salaryTotal + salaryIn[2];
+    //console.log(salaryTotal);
+  }
+  salaryAvg = salaryTotal / employeesArray.length;
+  console.log(`The average employee salary between our ${employeesArray.length} employee(s) is $${salaryAvg.toFixed(2)}`);
 };
 
 // Select a random employee
@@ -65,7 +81,15 @@ const getRandomEmployee = function (employeesArray) {
   // (this could be fixed adding single line return in an if else statement that checks if employeesArray passed into this function is a valid array or empty and unable to use length function to set random number selection size)
   // another option could be to add a separate call/button for this function so it's not automatically called even if you cancel inputting employees information
   let choice = Math.floor(Math.random() * employeesArray.length);
-  console.log(choice);
+  let nameOut;
+  var objectIt = employeesArray[choice];
+    //console.log(objectIt);
+    let nameIn = Object.values(objectIt);
+    //console.log(nameIn);
+    nameIn = nameIn[0] + " " + nameIn[1];
+    //console.log(nameIn);
+    nameOut = nameIn;
+  console.log(`Congratulations to ${nameOut}, our random drawing winner!`);
 };
 
 /*
@@ -111,11 +135,6 @@ const displayEmployees = function (employeesArray) {
 
 const trackEmployeeData = function () {
   const employees = collectEmployees();
-  //TEST BLOCK---------------------------------------------------------------------------------------------
-  // for (let i = 0; i < lengthOfList; i++){
-    // console.log(employees[i]);
-  // }
-  //-------------------------------------------------------------------------------------------------------
   console.table(employees);
 
   displayAverageSalary(employees);
