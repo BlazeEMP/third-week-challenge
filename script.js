@@ -5,23 +5,26 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 //let lengthOfList = 0;
 //----------------------------------------------------------------------------------------------------------------------------------------------
 
-// initialize tracking variables for object array of employees and a modifiable data out for function to enter employee info, created here to not reset the object array when initializing a new employee input loop 
-let personNumber = 0;
-const dataOut = [];
+
+
+
 
 // Collect employee data
 const collectEmployees = function () {
+  // initialize tracking variables for object array of employees and a modifiable data out for function to enter employee info, can created outside of the function to not reset the object array when initializing a new employee input loop 
+  let personNumber = 0;
+  const employees = [];
   // initialize array of keys for all value names and array to store employee values
   const keys = ['firstName', 'lastName', 'salary'];
   const values = [];
 
-  // creates unique first oppurtunity to enter values or deny and return nothing, avoids returning an empty dataOut object
-  let enter = confirm(`Enter new employee info?`)
-  if (!enter && dataOut.length === 0) {
-    return;
-  } else if (!enter) {
-    return dataOut; // prevents error from calling this function on button press if you enter nothing by returning the existing array of objects
-  }
+  // creates unique first oppurtunity to enter values or deny and return nothing, avoids returning an empty employees object
+  let enter = true;
+  // if (!enter && employees.length === 0) {
+  //   return;
+  // } else if (!enter) {
+  //   return employees; // prevents error from calling this function on button press if you enter nothing by returning the existing array of objects
+  // }
 
   // as long as you selected confirm input employees will continue to allow more employee object editions
   while(enter) {
@@ -45,7 +48,7 @@ const collectEmployees = function () {
     // ADDITIONAL NOTES ON LIST SIZE AND ADDING MORE EMPLOYEES AFTER CLOSING THE LOOP ------------------------------------------------------------------
     // if looking for a consistent way to not overwrite the list (adding an edit button and object array index selector could be used for that) instead of using personNumber variable which is reset on page load since let var = 0; is in the global scope,
     // add a table size check in case prepopulated info is there. Depends on storage location or if the array is initialized with those objects and values in the above JS code
-    dataOut[personNumber] = employee;
+    employees[personNumber] = employee;
     enter = confirm(`Add more employees?`);
     personNumber++;
     //TEST BLOCK---------------------------------------------------------------------------------------------
@@ -56,9 +59,8 @@ const collectEmployees = function () {
     //ALSO ADD LENGTH OF LIST ITERATOR FOR TEST CONSOLE PRINT LOOP-----------------------------------------------------------------------------------------------------------
     //lengthOfList++;
   }
-  return dataOut; // primary data tracking return once leaving while loop, this variable is assigned to whatever exists in the employee object array each time the function is called, its sister variable for tracking the placement of employees in the index is declared just below it at the top of the page
+  return employees; // primary data tracking return once leaving while loop, this variable is assigned to whatever exists in the employee object array each time the function is called, its sister variable for tracking the placement of employees in the index is declared just below it at the top of the page
 };
-
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
   let salaryTotal = 0;
