@@ -40,11 +40,11 @@ const collectEmployees = function () {
     for (let i = 0; i < keys.length; i++) {
       employee[keys[i]] = values[i];
     }
-
+    console.log(employee); //ad for tracking object creation
     // add each new employee object to the data return for this function, verify if adding more employees, and iterate the personNumber variable to maintain consistent list placement
     // ADDITIONAL NOTES ON LIST SIZE AND ADDING MORE EMPLOYEES AFTER CLOSING THE LOOP ------------------------------------------------------------------
     // if looking for a consistent way to not overwrite the list (adding an edit button and object array index selector could be used for that) instead of using personNumber variable which is reset on page load since let var = 0; is in the global scope,
-    // add a table size check in case prepopulated info is there. Depends on storage location or if the array is initialized with those onjects and values in the above JS code
+    // add a table size check in case prepopulated info is there. Depends on storage location or if the array is initialized with those objects and values in the above JS code
     dataOut[personNumber] = employee;
     enter = confirm(`Add more employees?`);
     personNumber++;
